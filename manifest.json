@@ -1,0 +1,17 @@
+{
+    "name": "pixivアイコン表示",
+        "version": "0.0.1",
+        "manifest_version": 2,
+        "description": "pixivで評価をすると、アイコンを表示します",
+        "browser_action": {
+            "default_icon": "icon.png",
+            "default_title": "pixivアイコン表示"
+        },
+        "content_scripts": [
+        {
+            "matches": ["http://www.pixiv.net/*"],
+            "js": ["jquery.min.js","main.js"],
+            "run_at": "document_start"
+        }
+    ]
+}
