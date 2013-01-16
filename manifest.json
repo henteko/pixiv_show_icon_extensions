@@ -10,6 +10,7 @@
         "content_scripts": [
         {
             "matches": ["http://www.pixiv.net/*"],
+            "css": ["main.css"],
             "js": ["jquery.min.js","main.js"],
             "run_at": "document_start"
         }
