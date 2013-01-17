@@ -49,6 +49,7 @@ $(document).ready(function () {
                         if(data.success == true) {
                             //成功時
                             setIcon(img_url);
+                            $("div.rating").unbind();
                         }
                     });
 
