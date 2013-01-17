@@ -17,18 +17,7 @@ $(document).ready(function () {
 
         //そのページの評価を取得
         $.getJSON(BASE_URL + "/search/" + pixiv_context.illustId, function(data, status) {
-            var $score = $("section.score");
-            var $vote_users = $("<div>", {
-                class: "vote_user"
-            });
-            $.each(data, function(id) {
-                var $img = $("<img>",{
-                    id: "rating_user_icon",
-                    src: data[id].user_icon_url
-                });
-                $vote_users.append($img);
-            });
-            $score.append($vote_users);
+            setIcon(data);
         });
 
         $("div.rating").click(function(e) {
@@ -48,7 +37,8 @@ $(document).ready(function () {
                     $.get(url, function(data) {
                         if(data.success == true) {
                             //成功時
-                            setIcon(img_url);
+                            icon_data = [{user_icon_url: img_url}];
+                            setIcon(icon_data);
                             $("div.rating").unbind();
                         }
                     });
@@ -59,15 +49,18 @@ $(document).ready(function () {
     }, 100);
 });
 
-function setIcon(img_url) {
+function setIcon(data) {
+    console.log(data);
     var $score = $("section.score");
-    var $vote_users = $score.find(".vote_user") ? $score.find(".vote_user") : $("<div>", {
+    var $vote_users = $("<div>", {
         class: "vote_user"
     });
-    var $img = $("<img>",{
-        id: "rating_user_icon",
-        src: img_url
+    $.each(data, function(id) {
+        var $img = $("<img>",{
+            id: "rating_user_icon",
+            src: data[id].user_icon_url
+        });
+        $vote_users.append($img);
     });
-    $vote_users.append($img);
     $score.append($vote_users);
 }
