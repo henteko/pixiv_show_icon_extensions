@@ -1,9 +1,9 @@
 var script = function(){
     jQuery('<div>', {
         id:'toPixivData', 
-    'data-pixivuser':JSON.stringify(pixiv.user), 
-    'data-pixivcontext':JSON.stringify(pixiv.context), 
-    style:'display:none;'
+        'data-pixivuser':JSON.stringify(pixiv.user), 
+        'data-pixivcontext':JSON.stringify(pixiv.context), 
+        style:'display:none;'
     }).appendTo(jQuery('body'));
 };
 
@@ -11,28 +11,46 @@ $(document).ready(function () {
     location.href = 'javascript:('+script.toString()+')()';
 
     setTimeout(function () {
-        //backgroundとの通信
-        var port = chrome.extension.connect({ "name": "test" });
         var pixiv_user = $.parseJSON($("#toPixivData").attr("data-pixivuser"));
         var pixiv_context =  $.parseJSON($("#toPixivData").attr("data-pixivcontext"));
+        var BASE_URL = "http://henteko07.com:4000";
 
-        port.postMessage({ "illustId": pixiv_context.illustId });
-        port.onMessage.addListener(function(res) {
+        $.getJSON(BASE_URL + "/search/" + pixiv_context.illustId, function(data, status) {
             var $score = $("section.score");
             var $vote_users = $("<div>", {
                 class: "vote_user"
             });
-            $.each(res.data, function(id) {
+            $.each(data, function(id) {
                 var $img = $("<img>",{
                     id: "rating_user_icon",
-                    src: res.data[id].user_icon_url
+                    src: data[id].user_icon_url
                 });
                 $vote_users.append($img);
             });
-
             $score.append($vote_users);
         });
+
+        $("div.rating").click(function(e) {
+            //未評価の場合のみ実行
+            if(pixiv_context.rated == false) {
+                //投票する
+                var user_url = "http://www.pixiv.net/member.php?id=" + pixiv_user.id;
+                $.get(user_url, function(data) {
+                    var img = $(data).find(".profile_area img")[0];
+                    var img_url = $(img).attr("src");
+                    var url = BASE_URL + 
+                        "/vote?illust_id=" + pixiv_context.illustId + 
+                        "&user_id=" + pixiv_user.id + 
+                        "&point=" + 10 + 
+                        "&user_icon_url=" + img_url; 
+
+                    $.get(url, function(data) {
+                        console.log(data);
+                    });
+
+                });
+            }
+        });
     }, 100);
+
 });
-
-

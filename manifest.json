@@ -3,15 +3,14 @@
         "version": "0.0.1",
         "manifest_version": 2,
         "description": "pixivで評価をすると、アイコンを表示します",
-        "background": {
-            "page": "background.html"
-         },
         "browser_action": {
             "default_icon": "icon.png",
             "default_title": "pixivアイコン表示"
         },
         "permissions": [ 
-            "http://henteko07.com:4000/*"
+            "http://henteko07.com:4000/*",
+            "http://www.pixiv.net/*",
+            "https://www.pixiv.net/*"
         ],
         "content_scripts": [
         {
@@ -20,5 +19,6 @@
             "js": ["jquery.min.js","main.js"],
             "run_at": "document_start"
         }
-    ]
+    ],
+    "content_security_policy": "script-src 'self'; object-src 'self'"
 }
