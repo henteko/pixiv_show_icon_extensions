@@ -46,12 +46,27 @@ $(document).ready(function () {
                         "&user_icon_url=" + img_url; 
 
                     $.get(url, function(data) {
-                        console.log(data);
+                        if(data.success == true) {
+                            //成功時
+                            setIcon(img_url);
+                        }
                     });
 
                 });
             }
         });
     }, 100);
-
 });
+
+function setIcon(img_url) {
+    var $score = $("section.score");
+    var $vote_users = $score.find(".vote_user") ? $score.find(".vote_user") : $("<div>", {
+        class: "vote_user"
+    });
+    var $img = $("<img>",{
+        id: "rating_user_icon",
+        src: img_url
+    });
+    $vote_users.append($img);
+    $score.append($vote_users);
+}
