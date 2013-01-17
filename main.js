@@ -22,7 +22,7 @@ $(document).ready(function () {
 
         $("div.rating").click(function(e) {
             //未評価の場合のみ実行
-            if(pixiv_context.rated == true) {
+            if(pixiv_context.rated == false) {
                 //投票する
                 var user_url = "http://www.pixiv.net/member.php?id=" + pixiv_user.id;
                 $.get(user_url, function(data) {
