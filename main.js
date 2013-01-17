@@ -15,6 +15,7 @@ $(document).ready(function () {
         var pixiv_context =  $.parseJSON($("#toPixivData").attr("data-pixivcontext"));
         var BASE_URL = "http://henteko07.com:4000";
 
+        //そのページの評価を取得
         $.getJSON(BASE_URL + "/search/" + pixiv_context.illustId, function(data, status) {
             var $score = $("section.score");
             var $vote_users = $("<div>", {
