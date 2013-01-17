@@ -22,7 +22,7 @@ $(document).ready(function () {
 
         $("div.rating").click(function(e) {
             //未評価の場合のみ実行
-            if(pixiv_context.rated == false) {
+            if(pixiv_context.rated == true) {
                 //投票する
                 var user_url = "http://www.pixiv.net/member.php?id=" + pixiv_user.id;
                 $.get(user_url, function(data) {
@@ -53,9 +53,13 @@ $(document).ready(function () {
 
 function setIcon(data) {
     var $score = $("section.score");
-    var $vote_users = $("<div>", {
-        class: "vote_user"
-    });
+    var $vote_users = $score.find(".vote_user");
+    if($vote_users.length == 0) {
+        $vote_users = $("<div>", {
+            class: "vote_user"
+        });
+    }
+
     $.each(data, function(id) {
         var $a = $("<a>", {
             href: "http://www.pixiv.net/member.php?id=" + data[id].user_id,
@@ -67,7 +71,7 @@ function setIcon(data) {
             src: data[id].user_icon_url
         });
         $a.append($img);
-        $vote_users.append($a);
+        $vote_users.prepend($a);
     });
     $score.append($vote_users);
 }
