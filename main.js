@@ -28,16 +28,18 @@ $(document).ready(function () {
                 $.get(user_url, function(data) {
                     var img = $(data).find(".profile_area img")[0];
                     var img_url = $(img).attr("src");
+                    var user_name = $(data).find(".profile_area h2").text();
                     var url = BASE_URL + 
                         "/vote?illust_id=" + pixiv_context.illustId + 
                         "&user_id=" + pixiv_user.id + 
                         "&point=" + 10 + 
-                        "&user_icon_url=" + img_url; 
+                        "&user_icon_url=" + img_url + 
+                        "&user_name=" + user_name;
 
                     $.get(url, function(data) {
                         if(data.success == true) {
                             //成功時
-                            icon_data = [{user_icon_url: img_url, user_id: pixiv_user.id}];
+                            icon_data = [{user_icon_url: img_url, user_id: pixiv_user.id, user_name: user_name}];
                             setIcon(icon_data);
                             $("div.rating").unbind();
                         }
@@ -50,7 +52,6 @@ $(document).ready(function () {
 });
 
 function setIcon(data) {
-    console.log(data);
     var $score = $("section.score");
     var $vote_users = $("<div>", {
         class: "vote_user"
