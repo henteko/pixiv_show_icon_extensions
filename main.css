@@ -1,8 +1,9 @@
-.vote_users {
+#rating_user_icon {
+    height: 0%;
+    width: 0%;
+    border-radius: 50%;
 }
 
-#rating_user_icon {
-    width: 30px;
-    height: 30px;
-    border-radius: 50%;
+.vote_user a {
+    margin-left: 1px;
 }

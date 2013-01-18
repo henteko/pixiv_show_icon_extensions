@@ -17,7 +17,7 @@ $(document).ready(function () {
 
         //そのページの評価を取得
         $.getJSON(BASE_URL + "/search/" + pixiv_context.illustId, function(data, status) {
-            setIcon(data);
+            setIcon(data, false);
         });
 
         $("div.rating").click(function(e) {
@@ -40,7 +40,7 @@ $(document).ready(function () {
                         if(data.success == true) {
                             //成功時
                             icon_data = [{user_icon_url: img_url, user_id: pixiv_user.id, user_name: user_name}];
-                            setIcon(icon_data);
+                            setIcon(icon_data, true);
                             $("div.rating").unbind();
                         }
                     });
@@ -51,7 +51,7 @@ $(document).ready(function () {
     }, 100);
 });
 
-function setIcon(data) {
+function setIcon(data, new_flag) {
     var $score = $("section.score");
     var $vote_users = $score.find(".vote_user");
     if($vote_users.length == 0) {
@@ -72,6 +72,15 @@ function setIcon(data) {
         });
         $a.append($img);
         $vote_users.prepend($a);
+        if(new_flag) {
+            //アニメーション
+            $img.animate({ 
+                width: "30px",
+                height: "30px",
+            }, 1000 );
+        }else {
+            $img.css("width", "30px").css("height", "30px");
+        }
     });
     $score.append($vote_users);
 }
