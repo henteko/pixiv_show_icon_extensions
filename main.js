@@ -71,15 +71,16 @@ function setIcon(data, new_flag) {
             src: data[id].user_icon_url
         });
         $a.append($img);
-        $vote_users.prepend($a);
         if(new_flag) {
             //アニメーション
             $img.animate({ 
                 width: "30px",
                 height: "30px",
             }, 1000 );
+            $vote_users.prepend($a);
         }else {
             $img.css("width", "30px").css("height", "30px");
+            $vote_users.append($a);
         }
     });
     $score.append($vote_users);
