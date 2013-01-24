@@ -62,21 +62,16 @@ function setIcon(data, new_flag) {
 
     $.each(data, function(id) {
         var $a = $("<a>", {
-            href: "http://www.pixiv.net/member.php?id=" + data[id].user_id,
-            class: "ui-tooltip",
-            "data-tooltip": data[id].user_name ? data[id].user_name : "名無しさん"
+            href: "http://www.pixiv.net/member.php?id=" + data[id].user_id
         });
         var $img = $("<img>",{
             id: "rating_user_icon",
-            src: data[id].user_icon_url
+            src: data[id].user_icon_url,
+            class: "ui-tooltip",
+            "data-tooltip": data[id].user_name ? data[id].user_name : "名無しさん"
         });
         $a.append($img);
         if(new_flag) {
-            //アニメーション
-            $img.animate({ 
-                width: "30px",
-                height: "30px",
-            }, 1000 );
             $vote_users.prepend($a);
         }else {
             $img.css("width", "30px").css("height", "30px");
